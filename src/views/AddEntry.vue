@@ -31,6 +31,18 @@
             <p class="text-error">{{ errors[0] }}</p>
           </ValidationProvider>
         </div>
+        <div class="col-6 checkbox-container">
+          <input type="checkbox" v-model="past" />
+          <label>Past</label>
+        </div>
+        <div class="col-6 checkbox-container">
+          <input type="checkbox" v-model="otherPeriod" />
+          <label>Change period</label>
+        </div>
+        <div class="col-12" v-if="past">
+          <label>Date</label>
+          <datepicker :format="formatDate" v-model="date" calendar-class="entry-date-calendar"></datepicker>
+        </div>
         <div class="col-12" v-if="otherPeriod">
           <label>Period in month</label>
           <ValidationProvider
@@ -48,11 +60,7 @@
             <p class="text-error">{{ errors[0] }}</p>
           </ValidationProvider>
         </div>
-        <div class="col-6 other-period-container">
-          <input type="checkbox" v-model="otherPeriod" />
-          <label>Change period</label>
-        </div>
-        <div class="col-6">
+        <div class="col-12">
           <button type="submit" class="button primary add-entry-button" :disabled="invalid">Save</button>
         </div>
       </form>
@@ -71,7 +79,9 @@ import { ValidationProvider } from "vee-validate";
 import { Watch } from "vue-property-decorator";
 
 import { NewEntry } from "../shared/entry";
-import { ADD_ENTRY } from "../store/index";
+import { ADD_NEW_ENTRY, ADD_OLD_ENTRY } from "../store/index";
+import Datepicker from "vuejs-datepicker";
+import { formatDate } from "@/shared/date-util";
 
 extend("name-required", {
   ...required,
@@ -98,7 +108,8 @@ extend("period-between", value => {
 
 @Component({
   components: {
-    ValidationProvider
+    ValidationProvider,
+    Datepicker
   }
 })
 export default class AddEntry extends Vue {
@@ -107,7 +118,13 @@ export default class AddEntry extends Vue {
     description: "",
     periodInMonths: 3
   };
+  past = false;
   otherPeriod = false;
+  date = new Date();
+
+  formatDate(date: Date): string {
+    return formatDate(date);
+  }
 
   @Watch("otherPeriod")
   onChangeOtherPeriod(value: boolean): void {
@@ -117,7 +134,14 @@ export default class AddEntry extends Vue {
   }
 
   saveEntry() {
-    this.$store.dispatch(ADD_ENTRY, this.newEntry);
+    if (this.past) {
+      this.$store.dispatch(ADD_OLD_ENTRY, {
+        ...this.newEntry,
+        date: this.date
+      });
+    } else {
+      this.$store.dispatch(ADD_NEW_ENTRY, this.newEntry);
+    }
     this.newEntry.name = "";
     this.newEntry.description = "";
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
@@ -149,7 +173,7 @@ textarea {
   resize: vertical;
 }
 
-.other-period-container {
+.checkbox-container {
   * {
     vertical-align: middle;
   }
@@ -157,5 +181,15 @@ textarea {
 
 .add-entry-button {
   float: right;
+}
+
+::v-deep .entry-date-calendar {
+  .cell:not(.blank):not(.disabled):not(.day-header):hover {
+    border-color: var(--color-primary) !important;
+  }
+
+  .cell.selected, .cell.selected:hover {
+    background: var(--color-primary);
+  }
 }
 </style>
