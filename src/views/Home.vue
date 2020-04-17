@@ -39,9 +39,10 @@ export default class Home extends Vue {
 .count-card {
   display: flex;
   align-items: center;
+  justify-content: center;
 
   img {
-    margin-right: 20px;
+    margin-right: 10px;
   }
 
   span {
