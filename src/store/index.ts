@@ -2,40 +2,29 @@ import moment from 'moment';
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import { Entry, NewEntry } from './../shared/entry';
+import { Entry, NewEntry, OldEntry } from './../shared/entry';
 
 Vue.use(Vuex)
 
 
-export const ADD_ENTRY = 'ADD_ENTRY'
+export const ADD_NEW_ENTRY = 'ADD_NEW_ENTRY';
+export const ADD_OLD_ENTRY = 'ADD_OLD_ENTRY';
 
+const generateId = (): number => {
+  return new Date().getTime()
+};
 
-export default new Vuex.Store({
+interface StoreModel {
+  entries: Entry[];
+}
+
+export default new Vuex.Store<StoreModel>({
   state: {
-    nextId: 4,
-    entries: [{
-      id: 1,
-      name: 'Max',
-      description: 'Birthday',
-      date: new Date(),
-      endDate: moment().add(5, 'months').toDate()
-    }, {
-      id: 2,
-      name: 'Sara',
-      description: 'Promotion',
-      date: new Date(),
-      endDate: moment().add(20, 'months').toDate()
-    }, {
-      id: 3,
-      name: 'Sophie',
-      description: 'Birthday',
-      date: new Date(),
-      endDate: moment().add(4, 'months').toDate()
-    }]
+    entries: []
   },
   getters: {
     sortedEntries: state => {
-      return [...state.entries].sort((a, b) => {
+      return [...state.entries].sort((a: Entry, b: Entry) => {
         return a.endDate.getTime() - b.endDate.getTime();
       });
     },
@@ -47,23 +36,36 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    [ADD_ENTRY](state, newEntry: NewEntry) {
+    [ADD_NEW_ENTRY](state, newEntry: NewEntry) {
       const date = new Date();
       const endDate = moment(date.getTime()).add(newEntry.periodInMonths, 'months').toDate();
       const entry: Entry = {
-        id: state.nextId,
+        id: generateId(),
         name: newEntry.name,
         description: newEntry.description,
         date,
         endDate
       };
-      state.nextId++;
+      state.entries.push(entry);
+    },
+    [ADD_OLD_ENTRY](state, oldEntry: OldEntry) {
+      const endDate = moment(oldEntry.date).add(oldEntry.periodInMonths, 'months').toDate();
+      const entry: Entry = {
+        id: generateId(),
+        name: oldEntry.name,
+        description: oldEntry.description,
+        date: oldEntry.date,
+        endDate
+      };
       state.entries.push(entry);
     }
   },
   actions: {
-    [ADD_ENTRY]({ commit }, newEntry: NewEntry) {
-      commit(ADD_ENTRY, newEntry);
+    [ADD_NEW_ENTRY]({ commit }, newEntry: NewEntry) {
+      commit(ADD_NEW_ENTRY, newEntry);
+    },
+    [ADD_OLD_ENTRY]({ commit }, oldEntry: OldEntry) {
+      commit(ADD_OLD_ENTRY, oldEntry);
     }
   },
   modules: {

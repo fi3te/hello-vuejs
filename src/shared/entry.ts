@@ -11,3 +11,10 @@ export interface NewEntry {
     description: string;
     periodInMonths: number;
 }
+
+export interface OldEntry {
+    name: string;
+    description: string;
+    periodInMonths: number;
+    date: Date;
+}
