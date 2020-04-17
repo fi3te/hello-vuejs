@@ -7,6 +7,7 @@
           <ValidationProvider name="newEntry.name" rules="name-required" v-slot="{ errors }">
             <input
               type="text"
+              autocomplete="off"
               v-model.trim="newEntry.name"
               :class="{'bd-error': errors.length}"
               ref="nameInput"
@@ -23,6 +24,7 @@
           >
             <textarea
               type="text"
+              autocomplete="off"
               v-model.trim="newEntry.description"
               :class="{'bd-error': errors.length}"
             ></textarea>
@@ -131,6 +133,12 @@ export default class AddEntry extends Vue {
 <style lang="scss" scoped>
 .row {
   align-items: center;
+}
+
+@media (max-width: 599px) {
+  .col-6 {
+    flex: 0 0 calc(50% - var(--grid-gutter));
+  }
 }
 
 label {

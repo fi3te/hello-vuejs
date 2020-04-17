@@ -28,7 +28,7 @@ export default class TheHeader extends Vue {}
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 599px) {
   .nav {
     padding: 10px;
     flex-direction: column;
