@@ -19,15 +19,18 @@ export default Vue.extend({
   },
   data: () => {
     return {
-      transitionName: 'slide-right',
+      transitionName: "slide-right",
       routeNames: routes.map(route => route.name)
-    }
+    };
   },
   watch: {
-  '$route' (to, from) {
-    this.transitionName = this.routeNames.indexOf(from.name) < this.routeNames.indexOf(to.name) ? 'slide-right' : 'slide-left'
+    $route(to, from) {
+      this.transitionName =
+        this.routeNames.indexOf(from.name) < this.routeNames.indexOf(to.name)
+          ? "slide-right"
+          : "slide-left";
+    }
   }
-}
 });
 </script>
 
@@ -70,48 +73,22 @@ export default Vue.extend({
     animation: slide-right-out $slideOutDuration ease forwards;
   }
 
-  @keyframes slide-right-in {
-    from {
-      transform: translateX($translation);
-      opacity: 0;
-    }
-    to {
-      transform: translateX(0);
-      opacity: 1;
-    }
-  }
-
-  @keyframes slide-left-in {
-    from {
-      transform: translateX(-$translation);
-      opacity: 0;
-    }
-    to {
-      transform: translateX(0);
-      opacity: 1;
+  @mixin keyframes($keyFrameName, $fromX, $toX, $fromOpacity, $toOpacity) {
+    @keyframes #{$keyFrameName} {
+      from {
+        transform: translateX($fromX);
+        opacity: $fromOpacity;
+      }
+      to {
+        transform: translateX($toX);
+        opacity: $toOpacity;
+      }
     }
   }
 
-  @keyframes slide-right-out {
-    from {
-      transform: translateX(0);
-      opacity: 1;
-    }
-    to {
-      transform: translateX($translation);
-      opacity: 0;
-    }
-  }
-
-  @keyframes slide-left-out {
-    from {
-      transform: translateX(0);
-      opacity: 1;
-    }
-    to {
-      transform: translateX(-$translation);
-      opacity: 0;
-    }
-  }
+  @include keyframes(slide-left-in, -$translation, 0, 0, 1);
+  @include keyframes(slide-right-in, $translation, 0, 0, 1);
+  @include keyframes(slide-left-out, 0, -$translation, 1, 0);
+  @include keyframes(slide-right-out, 0, $translation, 1, 0);
 }
 </style>
