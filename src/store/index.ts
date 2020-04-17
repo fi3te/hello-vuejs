@@ -28,7 +28,7 @@ export default new Vuex.Store({
     }, {
       id: 3,
       name: 'Sophie',
-      description: 'Punishment',
+      description: 'Birthday',
       date: new Date(),
       endDate: moment().add(4, 'months').toDate()
     }]

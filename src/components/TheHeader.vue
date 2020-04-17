@@ -27,4 +27,18 @@ export default class TheHeader extends Vue {}
     color: unset;
   }
 }
+
+@media (max-width: 600px) {
+  .nav {
+    padding: 10px;
+    flex-direction: column;
+    align-items: center;
+
+    .tabs {
+      overflow-x: auto;
+      max-width: 100%;
+      padding-bottom: 5px;
+    }
+  }
+}
 </style>

@@ -6,6 +6,7 @@
           <label>Name</label>
           <ValidationProvider name="newEntry.name" rules="name-required" v-slot="{ errors }">
             <input
+              type="text"
               v-model.trim="newEntry.name"
               :class="{'bd-error': errors.length}"
               ref="nameInput"
@@ -86,7 +87,6 @@ extend("period-required", {
 });
 
 extend("period-between", value => {
-  console.log(typeof value);
   if (typeof value == "number" && value >= 1 && value <= 36) {
     return true;
   } else {
