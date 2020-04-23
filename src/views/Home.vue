@@ -9,7 +9,7 @@
     </div>
     <div class="col card">
       <header>
-        <h4>Next cake</h4>
+        <h4>{{ $t("home.next-cake") }}</h4>
       </header>
       {{ earliestEndDate | date }}
     </div>
