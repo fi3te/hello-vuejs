@@ -11,6 +11,7 @@ Vue.use(Vuex)
 
 export const ADD_NEW_ENTRY = 'ADD_NEW_ENTRY';
 export const ADD_OLD_ENTRY = 'ADD_OLD_ENTRY';
+export const DELETE_ENTRY = 'DELETE_ENTRY';
 export const USE_BROWSER_LANGUAGE = 'USE_BROWSER_LANGUAGE';
 export const USE_LANGUAGE = 'USE_LANGUAGE';
 
@@ -65,6 +66,9 @@ export default new Vuex.Store<StoreModel>({
       };
       state.entries.push(entry);
     },
+    [DELETE_ENTRY](state, id: number) {
+      state.entries.splice(state.entries.map(entry => entry.id).indexOf(id), 1);
+    },
     [USE_LANGUAGE](state, language: SupportedLanguage) {
       state.language = language;
     }
@@ -75,6 +79,9 @@ export default new Vuex.Store<StoreModel>({
     },
     [ADD_OLD_ENTRY]({ commit }, oldEntry: OldEntry) {
       commit(ADD_OLD_ENTRY, oldEntry);
+    },
+    [DELETE_ENTRY]({ commit }, id: number) {
+      commit(DELETE_ENTRY, id);
     },
     [USE_BROWSER_LANGUAGE]({ dispatch }) {
       let languageCode = navigator.language;
