@@ -7,6 +7,7 @@
           <th>{{ $t("list.description") }}</th>
           <th>{{ $t("list.date") }}</th>
           <th>{{ $t("list.end-date") }}</th>
+          <th>{{ $t("list.actions") }}</th>
         </tr>
       </thead>
       <tbody>
@@ -17,6 +18,7 @@
           </td>
           <td>{{ entry.date | date }}</td>
           <td>{{ entry.endDate | date }}</td>
+          <td><button class="button error" @click="deleteEntry($event, entry.id)">{{ $t("list.delete") }}</button></td>
         </tr>
       </tbody>
     </table>
@@ -28,17 +30,21 @@
 import Vue from "vue";
 import Component from "vue-class-component";
 import { Entry } from "@/shared/entry";
+import { DELETE_ENTRY } from '../store';
 
 @Component
 export default class List extends Vue {
-  entries: Entry[] = [];
 
-  created(): void {
-    this.entries = this.$store.getters.sortedEntries;
+  get entries(): Entry[] {
+    return this.$store.getters.sortedEntries;
   }
 
   get empty(): boolean {
     return this.entries.length === 0
+  }
+
+  deleteEntry(event: MouseEvent, id: number): void {
+    this.$store.dispatch(DELETE_ENTRY, id);
   }
 }
 </script>

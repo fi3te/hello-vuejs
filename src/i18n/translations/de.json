@@ -18,7 +18,9 @@
         "next-cake": "Nächster Kuchen"
     },
     "list": {
+        "actions": "Aktionen",
         "date": "Datum",
+        "delete": "Entfernen",
         "description": "Beschreibung",
         "end-date": "Enddatum",
         "name": "Name",

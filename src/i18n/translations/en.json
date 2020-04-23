@@ -18,7 +18,9 @@
         "next-cake": "Next cake"
     },
     "list": {
+        "actions": "Actions",
         "date": "Date",
+        "delete": "Delete",
         "description": "Description",
         "end-date": "End date",
         "name": "Name",
