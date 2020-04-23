@@ -20,7 +20,7 @@
         </tr>
       </tbody>
     </table>
-    <span v-else>{{ $t("list.no-entries") }}</span>
+    <div class="col-12" v-else>{{ $t("list.no-entries") }}</div>
   </div>
 </template>
 

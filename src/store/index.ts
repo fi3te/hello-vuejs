@@ -1,3 +1,5 @@
+import { i18n } from '@/i18n';
+import { fallbackLanguage, SupportedLanguage, supportedLanguages } from '@/shared/supported-language';
 import moment from 'moment';
 import Vue from 'vue';
 import Vuex from 'vuex';
@@ -9,6 +11,8 @@ Vue.use(Vuex)
 
 export const ADD_NEW_ENTRY = 'ADD_NEW_ENTRY';
 export const ADD_OLD_ENTRY = 'ADD_OLD_ENTRY';
+export const USE_BROWSER_LANGUAGE = 'USE_BROWSER_LANGUAGE';
+export const USE_LANGUAGE = 'USE_LANGUAGE';
 
 const generateId = (): number => {
   return new Date().getTime()
@@ -16,11 +20,13 @@ const generateId = (): number => {
 
 interface StoreModel {
   entries: Entry[];
+  language: SupportedLanguage;
 }
 
 export default new Vuex.Store<StoreModel>({
   state: {
-    entries: []
+    entries: [],
+    language: fallbackLanguage
   },
   getters: {
     sortedEntries: state => {
@@ -33,7 +39,7 @@ export default new Vuex.Store<StoreModel>({
     },
     earliestEndDateEntry: (state, getters) => {
       return getters.count > 0 ? getters.sortedEntries[0] : null
-    }
+    },
   },
   mutations: {
     [ADD_NEW_ENTRY](state, newEntry: NewEntry) {
@@ -58,6 +64,9 @@ export default new Vuex.Store<StoreModel>({
         endDate
       };
       state.entries.push(entry);
+    },
+    [USE_LANGUAGE](state, language: SupportedLanguage) {
+      state.language = language;
     }
   },
   actions: {
@@ -66,6 +75,22 @@ export default new Vuex.Store<StoreModel>({
     },
     [ADD_OLD_ENTRY]({ commit }, oldEntry: OldEntry) {
       commit(ADD_OLD_ENTRY, oldEntry);
+    },
+    [USE_BROWSER_LANGUAGE]({ dispatch }) {
+      let languageCode = navigator.language;
+      if (languageCode && languageCode.length > 2) {
+        languageCode = languageCode.slice(0, 2);
+      }
+      if ((supportedLanguages as ReadonlyArray<string>).indexOf(languageCode) > -1) {
+        dispatch(USE_LANGUAGE, languageCode as SupportedLanguage);
+      } else {
+        dispatch(USE_LANGUAGE, fallbackLanguage);
+      }
+    },
+    [USE_LANGUAGE]({ commit }, language: SupportedLanguage) {
+      moment.locale(language);
+      i18n.locale = language;
+      commit(USE_LANGUAGE, language);
     }
   },
   modules: {
