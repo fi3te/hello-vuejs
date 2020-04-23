@@ -26,7 +26,8 @@ export default class Home extends Vue {
     return this.$store.getters.count;
   }
   get earliestEndDate() {
-    return this.$store.getters.earliestEndDateEntry.endDate;
+    const entry = this.$store.getters.earliestEndDateEntry
+    return entry ? entry.endDate : null;
   }
 }
 </script>
