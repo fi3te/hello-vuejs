@@ -1,0 +1,33 @@
+{
+    "add-entry": {
+        "change-period": "Zeitraum ändern",
+        "date": "Datum",
+        "description": "Beschreibung",
+        "name": "Name",
+        "past": "Bereits vergangen",
+        "period-in-month": "Zeitraum in Monaten",
+        "save": "Speichern",
+        "validation-error": {
+            "name-required": "Der Name ist erforderlich!",
+            "description-required": "Die Beschreibung ist erforderlich!",
+            "period-required": "Der Zeitraum ist erforderlich!",
+            "period-between-1-and-36": "Der Zeitraum muss zwischen 1 und 36 Monaten betragen!"
+        }
+    },
+    "home": {
+        "next-cake": "Nächster Kuchen"
+    },
+    "list": {
+        "date": "Datum",
+        "description": "Beschreibung",
+        "end-date": "Enddatum",
+        "name": "Name",
+        "no-entries": "Keine Einträge"
+    },
+    "the-header": {
+        "add-entry": "Eintrag hinzufügen",
+        "cake-list": "Kuchenliste",
+        "home": "Startseite",
+        "list": "Liste"
+    }
+}

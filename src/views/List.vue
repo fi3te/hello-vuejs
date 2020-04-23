@@ -3,10 +3,10 @@
     <table class="col-12" v-if="!empty">
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Description</th>
-          <th>Date</th>
-          <th>End date</th>
+          <th>{{ $t("list.name") }}</th>
+          <th>{{ $t("list.description") }}</th>
+          <th>{{ $t("list.date") }}</th>
+          <th>{{ $t("list.end-date") }}</th>
         </tr>
       </thead>
       <tbody>
@@ -20,7 +20,7 @@
         </tr>
       </tbody>
     </table>
-    <span v-else>No entries</span>
+    <span v-else>{{ $t("list.no-entries") }}</span>
   </div>
 </template>
 

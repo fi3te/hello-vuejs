@@ -3,7 +3,7 @@
     <ValidationObserver v-slot="{ invalid }" ref="form">
       <form class="row" @submit.prevent="saveEntry">
         <div class="col-12">
-          <label>Name</label>
+          <label>{{ $t("add-entry.name") }}</label>
           <ValidationProvider name="newEntry.name" rules="name-required" v-slot="{ errors }">
             <input
               type="text"
@@ -16,7 +16,7 @@
           </ValidationProvider>
         </div>
         <div class="col-12">
-          <label>Description</label>
+          <label>{{ $t("add-entry.description") }}</label>
           <ValidationProvider
             name="newEntry.description"
             rules="description-required"
@@ -33,18 +33,18 @@
         </div>
         <div class="col-6 checkbox-container">
           <input type="checkbox" v-model="past" />
-          <label>Past</label>
+          <label>{{ $t("add-entry.past") }}</label>
         </div>
         <div class="col-6 checkbox-container">
           <input type="checkbox" v-model="otherPeriod" />
-          <label>Change period</label>
+          <label>{{ $t("add-entry.change-period") }}</label>
         </div>
         <div class="col-12" v-if="past">
-          <label>Date</label>
+          <label>{{ $t("add-entry.date") }}</label>
           <datepicker :format="formatDate" v-model="date" calendar-class="entry-date-calendar"></datepicker>
         </div>
         <div class="col-12" v-if="otherPeriod">
-          <label>Period in month</label>
+          <label>{{ $t("add-entry.period-in-month") }}</label>
           <ValidationProvider
             name="newEntry.periodInMonths"
             rules="period-required|period-between"
@@ -61,7 +61,11 @@
           </ValidationProvider>
         </div>
         <div class="col-12">
-          <button type="submit" class="button primary add-entry-button" :disabled="invalid">Save</button>
+          <button
+            type="submit"
+            class="button primary add-entry-button"
+            :disabled="invalid"
+          >{{ $t("add-entry.save") }}</button>
         </div>
       </form>
     </ValidationObserver>
@@ -82,27 +86,28 @@ import { NewEntry } from "../shared/entry";
 import { ADD_NEW_ENTRY, ADD_OLD_ENTRY } from "../store/index";
 import Datepicker from "vuejs-datepicker";
 import { formatDate } from "@/shared/date-util";
+import { i18n } from "../i18n";
 
 extend("name-required", {
   ...required,
-  message: "The name is required!"
+  message: i18n.tc("add-entry.validation-error.name-required")
 });
 
 extend("description-required", {
   ...required,
-  message: "The description is required!"
+  message: i18n.tc("add-entry.validation-error.description-required")
 });
 
 extend("period-required", {
   ...required,
-  message: "The period is required!"
+  message: i18n.tc("add-entry.validation-error.period-required")
 });
 
 extend("period-between", value => {
   if (typeof value == "number" && value >= 1 && value <= 36) {
     return true;
   } else {
-    return "The period has to be between 1 and 36 months!";
+    return i18n.tc("add-entry.validation-error.period-between-1-and-36");
   }
 });
 
@@ -188,7 +193,8 @@ textarea {
     border-color: var(--color-primary) !important;
   }
 
-  .cell.selected, .cell.selected:hover {
+  .cell.selected,
+  .cell.selected:hover {
     background: var(--color-primary);
   }
 }

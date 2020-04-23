@@ -1,10 +1,10 @@
 <template>
   <nav class="nav">
-    <span class="brand">Cake list</span>
+    <span class="brand">{{ $t("the-header.cake-list") }}</span>
     <div class="tabs">
-      <router-link to="/" active-class="active" exact>Home</router-link>
-      <router-link to="/add" active-class="active">Add entry</router-link>
-      <router-link to="/list" active-class="active">List</router-link>
+      <router-link to="/" active-class="active" exact>{{ $t("the-header.home") }}</router-link>
+      <router-link to="/add-entry" active-class="active">{{ $t("the-header.add-entry") }}</router-link>
+      <router-link to="/list" active-class="active">{{ $t("the-header.list") }}</router-link>
     </div>
   </nav>
 </template>

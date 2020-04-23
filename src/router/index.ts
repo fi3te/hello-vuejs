@@ -12,7 +12,7 @@ export const routes: Array<RouteConfig> = [
     component: Home
   },
   {
-    path: '/add',
+    path: '/add-entry',
     name: 'Add entry',
     component: () => import('../views/AddEntry.vue')
   },

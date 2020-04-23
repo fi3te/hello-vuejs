@@ -1,0 +1,33 @@
+{
+    "add-entry": {
+        "change-period": "Change period",
+        "date": "Date",
+        "description": "Description",
+        "name": "Name",
+        "past": "Past",
+        "period-in-month": "Period in month",
+        "save": "Save",
+        "validation-error": {
+            "name-required": "The name is required!",
+            "description-required": "The description is required!",
+            "period-required": "The period is required!",
+            "period-between-1-and-36": "The period has to be between 1 and 36 months!"
+        }
+    },
+    "home": {
+        "next-cake": "Next cake"
+    },
+    "list": {
+        "date": "Date",
+        "description": "Description",
+        "end-date": "End date",
+        "name": "Name",
+        "no-entries": "No entries"
+    },
+    "the-header": {
+        "add-entry": "Add entry",
+        "cake-list": "Cake list",
+        "home": "Home",
+        "list": "List"
+    }
+}
