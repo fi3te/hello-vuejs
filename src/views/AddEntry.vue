@@ -87,12 +87,12 @@ import { required } from "vee-validate/dist/rules";
 import { ValidationProvider } from "vee-validate";
 import { Watch } from "vue-property-decorator";
 
-import { NewEntry } from "../shared/entry";
-import { ADD_NEW_ENTRY, ADD_OLD_ENTRY } from "../store/index";
+import { NewEntry } from "@/shared/entry";
 import Datepicker from "vuejs-datepicker";
 import { de, en } from "vuejs-datepicker/dist/locale";
 import { formatDate } from "@/shared/date-util";
-import { i18n } from "../i18n";
+import { i18n } from "@/i18n";
+import { ADD_OLD_ENTRY, ADD_NEW_ENTRY } from '@/store/modules/entries';
 
 extend("name-required", {
   ...required,

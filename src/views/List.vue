@@ -48,7 +48,7 @@
 import Vue from "vue";
 import Component from "vue-class-component";
 import { Entry } from "@/shared/entry";
-import { DELETE_ENTRY } from "../store";
+import { DELETE_ENTRY } from '@/store/modules/entries';
 
 @Component
 export default class List extends Vue {
