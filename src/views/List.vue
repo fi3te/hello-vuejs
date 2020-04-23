@@ -12,13 +12,31 @@
       </thead>
       <tbody>
         <tr v-for="entry in entries" :key="entry.id">
-          <td>{{ entry.name }}</td>
           <td>
-            <pre>{{ entry.description }}</pre>
+            <div class="header-replacement">{{ $t("list.name") }}</div>
+            <div class="content">{{ entry.name }}</div>
           </td>
-          <td>{{ entry.date | date }}</td>
-          <td>{{ entry.endDate | date }}</td>
-          <td><button class="button error" @click="deleteEntry($event, entry.id)">{{ $t("list.delete") }}</button></td>
+          <td>
+            <div class="header-replacement">{{ $t("list.description") }}</div>
+            <pre class="content">{{ entry.description }}</pre>
+          </td>
+          <td>
+            <div class="header-replacement">{{ $t("list.date") }}</div>
+            <div class="content">{{ entry.date | date }}</div>
+          </td>
+          <td>
+            <div class="header-replacement">{{ $t("list.end-date") }}</div>
+            <div class="content">{{ entry.endDate | date }}</div>
+          </td>
+          <td>
+            <div class="header-replacement">{{ $t("list.actions") }}</div>
+            <div class="content">
+              <button
+                class="button error"
+                @click="deleteEntry($event, entry.id)"
+              >{{ $t("list.delete") }}</button>
+            </div>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -30,17 +48,16 @@
 import Vue from "vue";
 import Component from "vue-class-component";
 import { Entry } from "@/shared/entry";
-import { DELETE_ENTRY } from '../store';
+import { DELETE_ENTRY } from "../store";
 
 @Component
 export default class List extends Vue {
-
   get entries(): Entry[] {
     return this.$store.getters.sortedEntries;
   }
 
   get empty(): boolean {
-    return this.entries.length === 0
+    return this.entries.length === 0;
   }
 
   deleteEntry(event: MouseEvent, id: number): void {
@@ -64,6 +81,10 @@ tr {
 
   td {
     min-width: 100px;
+
+    .header-replacement {
+      display: none;
+    }
   }
 }
 
@@ -84,27 +105,20 @@ tr {
     border-bottom: 2px solid var(--color-lightGrey);
 
     td {
-      padding-left: 30%;
-    }
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
 
-    td:before {
-      position: absolute;
-      left: 15px;
-      width: 30%;
-      font-weight: bold;
-    }
+      .header-replacement {
+        display: block;
+        font-weight: bold;
+        flex-basis: 30%;
+        min-width: 120px;
+      }
 
-    td:nth-of-type(1):before {
-      content: "Name";
-    }
-    td:nth-of-type(2):before {
-      content: "Description";
-    }
-    td:nth-of-type(3):before {
-      content: "Date";
-    }
-    td:nth-of-type(4):before {
-      content: "End date";
+      .content {
+        flex-basis: 70%;
+      }
     }
   }
 }
