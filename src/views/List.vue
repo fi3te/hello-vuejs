@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <table class="col-12">
+    <table class="col-12" v-if="!empty">
       <thead>
         <tr>
           <th>Name</th>
@@ -20,6 +20,7 @@
         </tr>
       </tbody>
     </table>
+    <span v-else>No entries</span>
   </div>
 </template>
 
@@ -34,6 +35,10 @@ export default class List extends Vue {
 
   created(): void {
     this.entries = this.$store.getters.sortedEntries;
+  }
+
+  get empty(): boolean {
+    return this.entries.length === 0
   }
 }
 </script>

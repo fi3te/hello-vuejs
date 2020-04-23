@@ -32,7 +32,7 @@ export default new Vuex.Store<StoreModel>({
       return state.entries.length
     },
     earliestEndDateEntry: (state, getters) => {
-      return getters.sortedEntries[0]
+      return getters.count > 0 ? getters.sortedEntries[0] : null
     }
   },
   mutations: {
