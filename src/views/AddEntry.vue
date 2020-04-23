@@ -41,7 +41,12 @@
         </div>
         <div class="col-12" v-if="past">
           <label>{{ $t("add-entry.date") }}</label>
-          <datepicker :format="formatDate" v-model="date" calendar-class="entry-date-calendar"></datepicker>
+          <datepicker
+            :format="formatDate"
+            v-model="date"
+            :language="language"
+            calendar-class="entry-date-calendar"
+          ></datepicker>
         </div>
         <div class="col-12" v-if="otherPeriod">
           <label>{{ $t("add-entry.period-in-month") }}</label>
@@ -85,6 +90,7 @@ import { Watch } from "vue-property-decorator";
 import { NewEntry } from "../shared/entry";
 import { ADD_NEW_ENTRY, ADD_OLD_ENTRY } from "../store/index";
 import Datepicker from "vuejs-datepicker";
+import { de, en } from "vuejs-datepicker/dist/locale";
 import { formatDate } from "@/shared/date-util";
 import { i18n } from "../i18n";
 
@@ -129,6 +135,16 @@ export default class AddEntry extends Vue {
 
   formatDate(date: Date): string {
     return formatDate(date);
+  }
+
+  get language() {
+    switch (this.$store.state.language) {
+      case "de":
+        return de;
+      case "en":
+      default:
+        return en;
+    }
   }
 
   @Watch("otherPeriod")

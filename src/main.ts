@@ -1,3 +1,4 @@
+import { USE_BROWSER_LANGUAGE } from './store/index';
 import '../node_modules/chota/dist/chota.min.css';
 
 import { ValidationObserver, ValidationProvider } from 'vee-validate';
@@ -13,6 +14,8 @@ Vue.component('ValidationObserver', ValidationObserver);
 Vue.component('ValidationProvider', ValidationProvider);
 
 Vue.filter("date", formatDate);
+
+store.dispatch(USE_BROWSER_LANGUAGE);
 
 new Vue({
   router,
